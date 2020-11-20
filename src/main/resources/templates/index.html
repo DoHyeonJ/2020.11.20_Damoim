@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+<div class="alert alert-warning" role="alert" th:if="${account != null && !account.emailVerified}">
+    가입을 완료하려면 <a th:href="@{/check-email}" class="alert-link">이메일 인증</a>을해주세요.
+</div>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>하이클럽</h1>
+        <p class="lead text-muted">
+            동호회 모임 서비스입니다.<br/>
+            지역과 관심키워드에 맞춰 동호회를 찾아보세요
+        </p>
+        <p>
+            <a th:href="@{/sign-up}" class="btn btn-primary my-2">회원 가입</a>
+        </p>
+    </div>
+</section>
+<div th:replace="fragments.html :: footer"></div>
+<div th:replace="fragments.html :: date-time"></div>
+</body>
+</html>
