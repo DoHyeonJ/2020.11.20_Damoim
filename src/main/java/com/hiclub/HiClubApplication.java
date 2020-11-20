@@ -1,4 +1,4 @@
-package com.hiclub.hi_club;
+package com.hiclub;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
