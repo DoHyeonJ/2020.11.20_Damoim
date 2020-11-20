@@ -11,14 +11,14 @@
         <h1>하이클럽</h1>
         <p class="lead text-muted">
             동호회 모임 서비스입니다.<br/>
-            지역과 관심키워드에 맞춰 동호회를 찾아보세요
+            관심키워드에 맞춰 동호회를 찾아보세요
         </p>
         <p>
-            <a th:href="@{/sign-up}" class="btn btn-primary my-2">회원 가입</a>
+            <a th:href="@{/sign-up}" class="btn btn-info my-2">회원 가입</a>
         </p>
     </div>
 </section>
-<div th:replace="fragments.html :: footer"></div>
+<div class="container-fluid navbar-fixed-bottom" th:replace="fragments.html :: footer"></div>
 <div th:replace="fragments.html :: date-time"></div>
 </body>
 </html>
