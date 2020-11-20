@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")
@@ -25,7 +26,9 @@ public class Account {
 
     private String emailCheckToken; //이메일인증토큰
 
-    private LocalDateTime joinedAt; //가입일(이메일인증시간)
+    private LocalDateTime emailCheckTokenGeneratedAt; //이메일인증시간
+
+    private LocalDateTime joinedAt; //가입일
 
     private String bio; //프로필소개
 
@@ -49,4 +52,23 @@ public class Account {
     private boolean clubUpdateByEmail; //모임수정사항 알림
 
     private boolean clubUpdateByWeb; //모임수정사항 알림
+
+    public void generateEmailCheckToken() {
+        this.emailCheckToken = UUID.randomUUID().toString();
+        this.emailCheckTokenGeneratedAt = LocalDateTime.now();
+    }
+
+    public void completeSignUp() {
+        this.emailVerified = true;
+        this.joinedAt = LocalDateTime.now();
+    }
+
+
+    public boolean isValidToken(String token) {
+        return this.emailCheckToken.equals(token);
+    }
+
+    public boolean canSendConfirmEmail() {
+        return this.emailCheckTokenGeneratedAt.isBefore(LocalDateTime.now().minusHours(1));
+    }
 }
