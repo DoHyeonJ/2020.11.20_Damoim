@@ -34,16 +34,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll();
         http.logout()
                 .logoutSuccessUrl("/");
-        http.rememberMe()
-                .userDetailsService(accountService)
-                .tokenRepository(tokenRepository());
+//        http.rememberMe()
+//                .userDetailsService(accountService)
+//                .tokenRepository(tokenRepository());
     }
 
-    private PersistentTokenRepository tokenRepository() {
-        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-        jdbcTokenRepository.setDataSource(dataSource);
-        return jdbcTokenRepository;
-    }
+//    private PersistentTokenRepository tokenRepository() {
+//        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+//        jdbcTokenRepository.setDataSource(dataSource);
+//        return jdbcTokenRepository;
+//    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
