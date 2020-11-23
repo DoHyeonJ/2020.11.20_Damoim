@@ -50,7 +50,7 @@ public class AccountController {
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model){
         Account account = accountRepository.findByEmail(email);
-        String view = "account/checked-email";
+        String view = "mail/checked-email";
         if (account == null){
             model.addAttribute("error", "wrong.email");
             return view;
@@ -70,7 +70,7 @@ public class AccountController {
     @GetMapping("/check-email")
     public String checkEmail(@CurrentAccount Account account, Model model) {
         model.addAttribute("email", account.getEmail());
-        return "account/check-email";
+        return "mail/check-email";
     }
 
     @GetMapping("/resend-confirm-email")
@@ -78,7 +78,7 @@ public class AccountController {
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error", "인증 이메일은 한시간에 한번만 전송할 수 있습니다.");
             model.addAttribute("email", account.getEmail());
-            return "account/check-email";
+            return "mail/check-email";
         }
         accountService.sendSignUpConfirmEmail(account);
         return "redirect:/";
