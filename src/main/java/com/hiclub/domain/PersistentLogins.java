@@ -1,4 +1,4 @@
-package com.hiclub.account;
+package com.hiclub.domain;
 
 
 import lombok.Getter;

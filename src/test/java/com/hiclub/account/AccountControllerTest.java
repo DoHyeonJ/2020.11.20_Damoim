@@ -1,7 +1,7 @@
-package com.hiclub.controller;
+package com.hiclub.account;
 
 import com.hiclub.domain.Account;
-import com.hiclub.repository.AccountRepository;
+import com.hiclub.account.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

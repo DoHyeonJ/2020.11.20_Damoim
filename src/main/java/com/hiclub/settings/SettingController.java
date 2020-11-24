@@ -1,9 +1,8 @@
-package com.hiclub.controller;
+package com.hiclub.settings;
 
-import com.hiclub.annotation.CurrentAccount;
+import com.hiclub.account.CurrentAccount;
 import com.hiclub.domain.Account;
-import com.hiclub.domain.Profile;
-import com.hiclub.service.AccountService;
+import com.hiclub.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -16,8 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
-import static com.hiclub.controller.SettingController.ROOT;
-import static com.hiclub.controller.SettingController.SETTINGS;
+import static com.hiclub.settings.SettingController.ROOT;
+import static com.hiclub.settings.SettingController.SETTINGS;
 
 @Controller
 @RequestMapping(ROOT + SETTINGS)
@@ -43,7 +42,7 @@ public class SettingController {
     public String updateProfile(@CurrentAccount Account account, @Valid Profile profile, Errors errors,
                                 Model model, RedirectAttributes attributes) {
         if(errors.hasErrors()) {
-            model.addAttribute(attributes);
+            model.addAttribute(account);
             return SETTINGS + PROFILE;
         }
 

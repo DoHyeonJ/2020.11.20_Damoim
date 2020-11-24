@@ -1,6 +1,5 @@
-package com.hiclub.service;
+package com.hiclub.mail;
 
-import com.hiclub.email.EmailMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;

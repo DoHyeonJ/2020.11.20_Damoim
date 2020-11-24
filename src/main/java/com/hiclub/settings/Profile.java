@@ -1,4 +1,4 @@
-package com.hiclub.domain;
+package com.hiclub.settings;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

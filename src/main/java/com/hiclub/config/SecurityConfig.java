@@ -1,6 +1,6 @@
 package com.hiclub.config;
 
-import com.hiclub.service.AccountService;
+import com.hiclub.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

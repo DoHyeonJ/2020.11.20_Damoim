@@ -1,4 +1,4 @@
-package com.hiclub.email;
+package com.hiclub.mail;
 
 import lombok.Builder;
 import lombok.Data;

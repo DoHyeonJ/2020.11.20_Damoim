@@ -1,4 +1,4 @@
-package com.hiclub.annotation;
+package com.hiclub.account;
 
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

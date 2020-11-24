@@ -1,10 +1,8 @@
-package com.hiclub.service;
+package com.hiclub.account;
 
-import com.hiclub.account.UserAccount;
 import com.hiclub.domain.Account;
-import com.hiclub.domain.Profile;
+import com.hiclub.settings.Profile;
 import com.hiclub.form.SignUpForm;
-import com.hiclub.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;

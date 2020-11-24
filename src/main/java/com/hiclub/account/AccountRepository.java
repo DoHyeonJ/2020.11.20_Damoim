@@ -1,4 +1,4 @@
-package com.hiclub.repository;
+package com.hiclub.account;
 
 import com.hiclub.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

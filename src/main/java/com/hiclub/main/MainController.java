@@ -1,6 +1,6 @@
-package com.hiclub.controller;
+package com.hiclub.main;
 
-import com.hiclub.annotation.CurrentAccount;
+import com.hiclub.account.CurrentAccount;
 import com.hiclub.domain.Account;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

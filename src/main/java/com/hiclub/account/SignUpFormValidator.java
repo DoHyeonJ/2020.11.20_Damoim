@@ -1,7 +1,7 @@
-package com.hiclub.validator;
+package com.hiclub.account;
 
 import com.hiclub.form.SignUpForm;
-import com.hiclub.repository.AccountRepository;
+import com.hiclub.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
