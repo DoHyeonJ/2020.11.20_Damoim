@@ -2,6 +2,7 @@ package com.hiclub.service;
 
 import com.hiclub.account.UserAccount;
 import com.hiclub.domain.Account;
+import com.hiclub.domain.Profile;
 import com.hiclub.form.SignUpForm;
 import com.hiclub.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -79,6 +80,11 @@ public class AccountService implements UserDetailsService {
     public void completeSignUp(Account account) {
         account.completeSignUp();
         login(account);
+    }
+
+    public void updateProfile(Account account, Profile profile) {
+        modelMapper.map(profile, account);
+        accountRepository.save(account);
     }
 
 }

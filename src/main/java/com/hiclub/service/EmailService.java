@@ -1,4 +1,6 @@
-package com.hiclub.email;
+package com.hiclub.service;
+
+import com.hiclub.email.EmailMessage;
 
 public interface EmailService {
 
