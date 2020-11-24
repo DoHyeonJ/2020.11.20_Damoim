@@ -3,6 +3,7 @@ package com.hiclub.config;
 import com.hiclub.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,16 +35,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll();
         http.logout()
                 .logoutSuccessUrl("/");
-//        http.rememberMe()
-//                .userDetailsService(accountService)
-//                .tokenRepository(tokenRepository());
+        http.rememberMe()
+                .userDetailsService(accountService)
+                .tokenRepository(tokenRepository());
     }
 
-//    private PersistentTokenRepository tokenRepository() {
-//        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
-//        jdbcTokenRepository.setDataSource(dataSource);
-//        return jdbcTokenRepository;
-//    }
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
