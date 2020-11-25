@@ -41,17 +41,17 @@ public class Account {
     @Lob @Basic(fetch = FetchType.EAGER)
     private String profileImage; //프로필이미지
 
-    private boolean clubCreateByEmail; //모임생성알림 수신여부(이메일)
+    private boolean clubCreatedByEmail; //모임생성알림 수신여부(이메일)
 
-    private boolean clubCreateByWeb; //모임생성알림 수신여부(웹)
+    private boolean clubCreatedByWeb = true; //모임생성알림 수신여부(웹)
 
     private boolean clubEnrollmentResultByEmail; //모임가입신청여부 알림
 
-    private boolean clubEnrollmentResultByWeb; //모임가입신청여부 알림
+    private boolean clubEnrollmentResultByWeb = true; //모임가입신청여부 알림
 
-    private boolean clubUpdateByEmail; //모임수정사항 알림
+    private boolean clubUpdatedByEmail; //모임수정사항 알림
 
-    private boolean clubUpdateByWeb; //모임수정사항 알림
+    private boolean clubUpdatedByWeb = true; //모임수정사항 알림
 
     public void generateEmailCheckToken() {
         this.emailCheckToken = UUID.randomUUID().toString();

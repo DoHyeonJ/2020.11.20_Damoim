@@ -1,6 +1,7 @@
 package com.hiclub.account;
 
 import com.hiclub.domain.Account;
+import com.hiclub.settings.Notifications;
 import com.hiclub.settings.Profile;
 import com.hiclub.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
@@ -87,6 +88,11 @@ public class AccountService implements UserDetailsService {
 
     public void updatePassword(Account account, String newPassword) {
         account.setPassword(passwordEncoder.encode(newPassword));
+        accountRepository.save(account);
+    }
+
+    public void updateNotifications(Account account, Notifications notifications) {
+        modelMapper.map(notifications, account);
         accountRepository.save(account);
     }
 

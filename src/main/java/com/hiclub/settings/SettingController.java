@@ -34,6 +34,7 @@ public class SettingController {
     static final String SETTINGS = "settings";
     static final String PROFILE = "/profile";
     static final String PASSWORD = "/password";
+    static final String NOTIFICATIONS = "/notifications";
 
 
     private final ModelMapper modelMapper;
@@ -78,5 +79,26 @@ public class SettingController {
         attributes.addFlashAttribute("message", "패스워드를 변경했습니다.");
         return "redirect:/" + SETTINGS + PASSWORD;
     }
+
+    @GetMapping(NOTIFICATIONS)
+    public String updateNotificationsForm(@CurrentAccount Account account, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(modelMapper.map(account, Notifications.class));
+        return SETTINGS + NOTIFICATIONS;
+    }
+
+    @PostMapping(NOTIFICATIONS)
+    public String updateNotifications(@CurrentAccount Account account, @Valid Notifications notifications, Errors errors,
+                                      Model model, RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            return SETTINGS + NOTIFICATIONS;
+        }
+
+        accountService.updateNotifications(account, notifications);
+        attributes.addFlashAttribute("message", "알림 설정을 변경했습니다.");
+        return "redirect:/" + SETTINGS + NOTIFICATIONS;
+    }
+
 
 }
