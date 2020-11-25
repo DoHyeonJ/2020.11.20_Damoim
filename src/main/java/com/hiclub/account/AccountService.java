@@ -105,7 +105,6 @@ public class AccountService implements UserDetailsService {
         login(account);
     }
 
-
     public void sendLoginLink(Account account) {
         account.generateEmailCheckToken();
         SimpleMailMessage mailMessage = new SimpleMailMessage();
