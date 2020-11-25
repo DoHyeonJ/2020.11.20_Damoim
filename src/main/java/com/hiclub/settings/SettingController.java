@@ -26,6 +26,7 @@ public class SettingController {
     static final String ROOT = "/";
     static final String SETTINGS = "settings";
     static final String PROFILE = "/profile";
+    static final String PASSWORD = "/password";
 
 
     private final ModelMapper modelMapper;
@@ -51,5 +52,24 @@ public class SettingController {
         return "redirect:/" + SETTINGS + PROFILE;
     }
 
+    @GetMapping(PASSWORD)
+    public String updatePasswordForm(@CurrentAccount Account account, Model model) {
+        model.addAttribute(account);
+        model.addAttribute(new PasswordForm());
+        return SETTINGS + PASSWORD;
+    }
+
+    @PostMapping(PASSWORD)
+    public String updatePassword(@CurrentAccount Account account, @Valid PasswordForm passwordForm, Errors errors,
+                                 Model model, RedirectAttributes attributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            return SETTINGS + PASSWORD;
+        }
+
+        accountService.updatePassword(account, passwordForm.getNewPassword());
+        attributes.addFlashAttribute("message", "패스워드를 변경했습니다.");
+        return "redirect:/" + SETTINGS + PASSWORD;
+    }
 
 }
