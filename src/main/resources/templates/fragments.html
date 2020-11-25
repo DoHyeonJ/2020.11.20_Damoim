@@ -6,9 +6,10 @@
 
 <head th:fragment="head">
     <meta charset="UTF-8">
-    <title>HiClub</title>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500&display=swap" rel="stylesheet">
+    <title>StudyOlle</title>
     <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/node_modules/@yaireo/tagify/dist/tagify.css">
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/node_modules/jdenticon/dist/jdenticon.min.js"></script>
@@ -21,79 +22,6 @@
             border: 0;
             padding: 0;
             margin: 0;
-        }
-
-        #study-logo {
-            height: 200px;
-            width: 100%;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-        }
-
-        #study-logo img {
-            height: auto;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        }
-
-        body,
-        input,
-        button,
-        select,
-        optgroup,
-        textarea,
-        .tooltip,
-        .popover {
-            font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        }
-
-        table th {
-            font-weight: lighter;
-        }
-
-        mark {
-            padding: 0;
-            background: transparent;
-            background: linear-gradient(to right, #f0ad4e 50%, transparent 50%);
-            background-position: right bottom;
-            background-size: 200% 100%;
-            transition: all .5s ease;
-            color: #fff;
-        }
-
-        mark.animate {
-            background-position: left bottom;
-            color: #000;
-        }
-
-        .jumbotron {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            margin-bottom: 0;
-            background-color: #fff;
-        }
-        @media (min-width: 768px) {
-            .jumbotron {
-                padding-top: 6rem;
-                padding-bottom: 6rem;
-            }
-        }
-
-        .jumbotron p:last-child {
-            margin-bottom: 0;
-        }
-
-        .jumbotron h1 {
-            font-weight: 300;
-        }
-
-        .jumbotron .container {
-            max-width: 40rem;
         }
     </style>
 </head>
@@ -160,58 +88,6 @@
         </ul>
     </div>
 </nav>
-
-<script type="application/javascript" th:fragment="form-validation">
-    (function () {
-        'use strict';
-
-        window.addEventListener('load', function () {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-
-            // Loop over them and prevent submission
-            Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-        }, false)
-    }())
-</script>
-
-<div th:fragment="date-time">
-    <script src="/node_modules/moment/min/moment-with-locales.min.js"></script>
-    <script type="application/javascript">
-        $(function () {
-            moment.locale('ko');
-            $(".date-time").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LLL');
-            });
-            $(".date").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LL');
-            });
-            $(".weekday").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('dddd');
-            });
-            $(".time").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LT');
-            });
-            $(".calendar").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").calendar();
-            });
-            $(".fromNow").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").fromNow();
-            });
-            $(".date-weekday-time").text(function(index, dateTime) {
-                return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LLLL');
-            });
-        })
-    </script>
-</div>
 
 <div th:fragment="settings-menu (currentMenu)" class="list-group">
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'profile'}? active" href="#" th:href="@{/settings/profile}">프로필</a>

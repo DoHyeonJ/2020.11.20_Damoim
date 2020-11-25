@@ -9,19 +9,23 @@ import com.hiclub.account.validator.NicknameValidator;
 import com.hiclub.account.validator.PasswordFormValidator;
 import com.hiclub.domain.Account;
 import com.hiclub.account.AccountService;
+import com.hiclub.domain.Tag;
+import com.hiclub.settings.form.TagForm;
+import com.hiclub.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.hiclub.settings.SettingController.ROOT;
 import static com.hiclub.settings.SettingController.SETTINGS;
@@ -47,11 +51,13 @@ public class SettingController {
     static final String PASSWORD = "/password";
     static final String NOTIFICATIONS = "/notifications";
     static final String ACCOUNT = "/account";
+    static final String TAGS = "/tags";
 
 
     private final ModelMapper modelMapper;
     private final AccountService accountService;
     private final NicknameValidator nicknameValidator;
+    private final TagRepository tagRepository;
 
     @GetMapping(PROFILE)
     public String updateProfileForm(@CurrentAccount Account account, Model model) {
@@ -131,6 +137,41 @@ public class SettingController {
         accountService.updateNickname(account, nicknameForm.getNickname());
         attributes.addFlashAttribute("message", "닉네임을 수정했습니다.");
         return "redirect:/" + SETTINGS + ACCOUNT;
+    }
+
+    @GetMapping(TAGS)
+    public String updateTags(@CurrentAccount Account account, Model model) {
+        model.addAttribute(account);
+        Set<Tag> tags = accountService.getTags(account);
+        model.addAttribute("tags", tags.stream().map(Tag::getTitle).collect(Collectors.toList()));
+        return SETTINGS + TAGS;
+    }
+
+    @PostMapping(TAGS + "/add")
+    @ResponseBody
+    public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
+        String title = tagForm.getTagTitle();
+
+        Tag tag = tagRepository.findByTitle(title);
+        if (tag == null) {
+            tag = tagRepository.save(Tag.builder().title(title).build());
+        }
+
+        accountService.addTag(account, tag);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(TAGS + "/remove")
+    @ResponseBody
+    public ResponseEntity removeTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
+        String title = tagForm.getTagTitle();
+        Tag tag = tagRepository.findByTitle(title);
+        if (tag == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        accountService.removeTag(account, tag);
+        return ResponseEntity.ok().build();
     }
 
 
