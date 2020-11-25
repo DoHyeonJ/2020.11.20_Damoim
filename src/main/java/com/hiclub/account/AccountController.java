@@ -1,17 +1,13 @@
-package com.hiclub.controller;
+package com.hiclub.account;
 
 
-import com.hiclub.account.CurrentAccount;
-import com.hiclub.domain.Account;
-import com.hiclub.form.SignUpForm;
-import com.hiclub.account.AccountRepository;
-import com.hiclub.account.AccountService;
 import com.hiclub.account.validator.SignUpFormValidator;
+import com.hiclub.domain.Account;
+import com.hiclub.account.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
-import org.h2.engine.Mode;
-import org.modelmapper.internal.Errors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -52,7 +48,7 @@ public class AccountController {
     @GetMapping("/check-email-token")
     public String checkEmailToken(String token, String email, Model model){
         Account account = accountRepository.findByEmail(email);
-        String view = "mail/checked-email";
+        String view = "account/checked-email";
         if (account == null){
             model.addAttribute("error", "wrong.email");
             return view;
@@ -72,7 +68,7 @@ public class AccountController {
     @GetMapping("/check-email")
     public String checkEmail(@CurrentAccount Account account, Model model) {
         model.addAttribute("email", account.getEmail());
-        return "mail/check-email";
+        return "account/check-email";
     }
 
     @GetMapping("/resend-confirm-email")
@@ -80,7 +76,7 @@ public class AccountController {
         if (!account.canSendConfirmEmail()) {
             model.addAttribute("error", "인증 이메일은 한시간에 한번만 전송할 수 있습니다.");
             model.addAttribute("email", account.getEmail());
-            return "mail/check-email";
+            return "account/check-email";
         }
         accountService.sendSignUpConfirmEmail(account);
         return "redirect:/";
@@ -136,3 +132,4 @@ public class AccountController {
 
 
 }
+

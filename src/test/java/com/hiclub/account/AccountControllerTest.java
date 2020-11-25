@@ -1,7 +1,6 @@
 package com.hiclub.account;
 
 import com.hiclub.domain.Account;
-import com.hiclub.account.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +46,19 @@ class AccountControllerTest {
                 .andExpect(unauthenticated());
     }
 
+    @DisplayName("회원가입 처리 - 오류")
+    @Test
+    void signUpSubmit_wrong_input() throws Exception {
+        mockMvc.perform(post("/sign-up")
+                .param("nickname", "gildong")
+                .param("email", "email..")
+                .param("password", "12345678")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("account/sign-up"))
+                .andExpect(unauthenticated());
+    }
+
     @DisplayName("회원가입 처리 - 정상")
     @Test
     void signUpSubmit_correct_input() throws Exception {
@@ -64,19 +76,6 @@ class AccountControllerTest {
         assertNotEquals(account.getPassword(), "12345678");
         assertNotNull(account.getEmailCheckToken());
         then(javaMailSender).should().send(any(SimpleMailMessage.class));
-    }
-
-    @DisplayName("회원가입 처리 - 오류")
-    @Test
-    void signUpSubmit_wrong_input() throws Exception {
-        mockMvc.perform(post("/sign-up")
-                .param("nickname", "gildong")
-                .param("email", "email..")
-                .param("password", "12345678")
-                .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("account/sign-up"))
-                .andExpect(unauthenticated());
     }
 
     @DisplayName("인증메일 확인 - 정상")
@@ -99,7 +98,7 @@ class AccountControllerTest {
                 .param("email", "dohyeon@email.com"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("error"))
-                .andExpect(view().name("mail/checked-email"))
+                .andExpect(view().name("account/checked-email"))
                 .andExpect(unauthenticated());
     }
 

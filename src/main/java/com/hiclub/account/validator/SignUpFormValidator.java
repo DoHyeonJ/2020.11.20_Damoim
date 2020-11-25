@@ -1,6 +1,6 @@
 package com.hiclub.account.validator;
 
-import com.hiclub.form.SignUpForm;
+import com.hiclub.account.form.SignUpForm;
 import com.hiclub.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

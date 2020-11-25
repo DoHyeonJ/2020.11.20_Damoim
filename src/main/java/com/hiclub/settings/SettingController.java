@@ -1,12 +1,12 @@
 package com.hiclub.settings;
 
 import com.hiclub.account.CurrentAccount;
-import com.hiclub.account.form.NicknameForm;
-import com.hiclub.account.form.Notifications;
-import com.hiclub.account.form.PasswordForm;
-import com.hiclub.account.form.Profile;
-import com.hiclub.account.validator.NicknameValidator;
-import com.hiclub.account.validator.PasswordFormValidator;
+import com.hiclub.settings.form.NicknameForm;
+import com.hiclub.settings.form.Notifications;
+import com.hiclub.settings.form.PasswordForm;
+import com.hiclub.settings.form.Profile;
+import com.hiclub.settings.validator.NicknameValidator;
+import com.hiclub.settings.validator.PasswordFormValidator;
 import com.hiclub.domain.Account;
 import com.hiclub.account.AccountService;
 import com.hiclub.domain.Tag;

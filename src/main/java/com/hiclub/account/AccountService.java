@@ -1,10 +1,10 @@
 package com.hiclub.account;
 
 import com.hiclub.domain.Account;
-import com.hiclub.account.form.Notifications;
-import com.hiclub.account.form.Profile;
+import com.hiclub.settings.form.Notifications;
+import com.hiclub.settings.form.Profile;
 import com.hiclub.domain.Tag;
-import com.hiclub.form.SignUpForm;
+import com.hiclub.account.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;

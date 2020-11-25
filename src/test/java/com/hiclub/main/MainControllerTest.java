@@ -1,6 +1,6 @@
 package com.hiclub.main;
 
-import com.hiclub.form.SignUpForm;
+import com.hiclub.account.form.SignUpForm;
 import com.hiclub.account.AccountRepository;
 import com.hiclub.account.AccountService;
 import org.junit.jupiter.api.AfterEach;

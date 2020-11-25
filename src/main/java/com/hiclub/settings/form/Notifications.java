@@ -1,4 +1,4 @@
-package com.hiclub.account.form;
+package com.hiclub.settings.form;
 
 import lombok.Data;
 

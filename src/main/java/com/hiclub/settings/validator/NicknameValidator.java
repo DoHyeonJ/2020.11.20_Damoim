@@ -1,7 +1,7 @@
-package com.hiclub.account.validator;
+package com.hiclub.settings.validator;
 
 import com.hiclub.account.AccountRepository;
-import com.hiclub.account.form.NicknameForm;
+import com.hiclub.settings.form.NicknameForm;
 import com.hiclub.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

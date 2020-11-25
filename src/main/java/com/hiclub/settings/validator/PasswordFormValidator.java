@@ -1,6 +1,6 @@
-package com.hiclub.account.validator;
+package com.hiclub.settings.validator;
 
-import com.hiclub.account.form.PasswordForm;
+import com.hiclub.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

@@ -1,6 +1,6 @@
 package com.hiclub;
 
-import com.hiclub.form.SignUpForm;
+import com.hiclub.account.form.SignUpForm;
 import com.hiclub.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
