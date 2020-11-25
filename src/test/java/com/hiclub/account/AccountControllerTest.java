@@ -70,7 +70,7 @@ class AccountControllerTest {
     @Test
     void signUpSubmit_wrong_input() throws Exception {
         mockMvc.perform(post("/sign-up")
-                .param("nickname", "dohyeon")
+                .param("nickname", "gildong")
                 .param("email", "email..")
                 .param("password", "12345678")
                 .with(csrf()))
