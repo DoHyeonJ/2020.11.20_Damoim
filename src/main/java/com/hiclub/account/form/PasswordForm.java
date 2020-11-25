@@ -1,4 +1,4 @@
-package com.hiclub.settings;
+package com.hiclub.account.form;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

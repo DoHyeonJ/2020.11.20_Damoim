@@ -6,7 +6,7 @@ import com.hiclub.domain.Account;
 import com.hiclub.form.SignUpForm;
 import com.hiclub.account.AccountRepository;
 import com.hiclub.account.AccountService;
-import com.hiclub.account.SignUpFormValidator;
+import com.hiclub.account.validator.SignUpFormValidator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.internal.Errors;
 import org.springframework.stereotype.Controller;

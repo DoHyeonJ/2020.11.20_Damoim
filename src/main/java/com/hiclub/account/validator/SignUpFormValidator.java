@@ -1,4 +1,4 @@
-package com.hiclub.account;
+package com.hiclub.account.validator;
 
 import com.hiclub.form.SignUpForm;
 import com.hiclub.account.AccountRepository;

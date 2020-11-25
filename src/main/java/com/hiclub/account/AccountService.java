@@ -1,8 +1,8 @@
 package com.hiclub.account;
 
 import com.hiclub.domain.Account;
-import com.hiclub.settings.Notifications;
-import com.hiclub.settings.Profile;
+import com.hiclub.account.form.Notifications;
+import com.hiclub.account.form.Profile;
 import com.hiclub.form.SignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -94,6 +94,12 @@ public class AccountService implements UserDetailsService {
     public void updateNotifications(Account account, Notifications notifications) {
         modelMapper.map(notifications, account);
         accountRepository.save(account);
+    }
+
+    public void updateNickname(Account account, String nickname) {
+        account.setNickname(nickname);
+        accountRepository.save(account);
+        login(account);
     }
 
 
