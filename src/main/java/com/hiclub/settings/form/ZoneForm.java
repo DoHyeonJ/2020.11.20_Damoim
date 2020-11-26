@@ -17,7 +17,7 @@ public class ZoneForm {
     }
 
     public String getLocalNameOfCity() {
-        return zoneName.substring(zoneName.indexOf("(") + 1, zoneName.indexOf("("));
+        return zoneName.substring(zoneName.indexOf("(") + 1, zoneName.indexOf(")"));
     }
 
     public Zone getZone() {
