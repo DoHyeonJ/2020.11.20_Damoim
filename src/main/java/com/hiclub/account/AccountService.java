@@ -2,6 +2,8 @@ package com.hiclub.account;
 
 import com.hiclub.domain.Account;
 import com.hiclub.domain.Zone;
+import com.hiclub.mail.EmailMessage;
+import com.hiclub.mail.EmailService;
 import com.hiclub.settings.form.Notifications;
 import com.hiclub.settings.form.Profile;
 import com.hiclub.domain.Tag;
@@ -33,7 +35,7 @@ public class AccountService implements UserDetailsService {
     private final AccountRepository accountRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    private final JavaMailSender javaMailSender;
+    private final EmailService emailService;
 
     public Account processNewAccount (SignUpForm signUpForm) {
         Account newAccount = saveNewAccount(signUpForm);
@@ -49,12 +51,14 @@ public class AccountService implements UserDetailsService {
     }
 
     public void sendSignUpConfirmEmail(Account newAccount) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(newAccount.getEmail());
-        mailMessage.setSubject("하이클럽, 회원 가입 인증");
-        mailMessage.setText("/check-email-token?token=" +
-                newAccount.getEmailCheckToken() + "&email=" + newAccount.getEmail());
-        javaMailSender.send(mailMessage);
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(newAccount.getEmail())
+                .subject("회원가입 인증")
+                .message("/check-email-token?token=" + newAccount.getEmailCheckToken() +
+                        "&email=" + newAccount.getEmail())
+                .build();
+
+        emailService.sendEmail(emailMessage);
     }
 
     public void login(Account account) {
@@ -107,13 +111,13 @@ public class AccountService implements UserDetailsService {
     }
 
     public void sendLoginLink(Account account) {
-        account.generateEmailCheckToken();
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(account.getEmail());
-        mailMessage.setSubject("하이클럽, 로그인 링크");
-        mailMessage.setText("/login-by-email?token=" +
-                account.getEmailCheckToken() + "&email=" + account.getEmail());
-        javaMailSender.send(mailMessage);
+        EmailMessage emailMessage = EmailMessage.builder()
+                .to(account.getEmail())
+                .subject("로그인 링크")
+                .message("/login-by-email?token=" + account.getEmailCheckToken() +
+                        "&email=" + account.getEmail())
+                .build();
+        emailService.sendEmail(emailMessage);
     }
 
     public void addTag(Account account, Tag tag) {

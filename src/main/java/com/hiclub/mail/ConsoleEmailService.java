@@ -14,46 +14,11 @@ import java.io.InputStream;
 @Slf4j
 @Profile("local")
 @Component
-public class ConsoleEmailService implements JavaMailSender {
-
-
-    @Override
-    public MimeMessage createMimeMessage() {
-        return null;
-    }
+public class ConsoleEmailService implements EmailService {
 
     @Override
-    public MimeMessage createMimeMessage(InputStream inputStream) throws MailException {
-        return null;
+    public void sendEmail(EmailMessage emailMessage) {
+        log.info("sent email: {}", emailMessage.getMessage());
     }
 
-    @Override
-    public void send(MimeMessage mimeMessage) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessage... mimeMessages) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessagePreparator mimeMessagePreparator) throws MailException {
-
-    }
-
-    @Override
-    public void send(MimeMessagePreparator... mimeMessagePreparators) throws MailException {
-
-    }
-
-    @Override
-    public void send(SimpleMailMessage simpleMailMessage) throws MailException {
-        log.info(simpleMailMessage.getText());
-    }
-
-    @Override
-    public void send(SimpleMailMessage... simpleMailMessages) throws MailException {
-
-    }
 }
