@@ -262,4 +262,11 @@ public class ClubSettingsController {
         return "redirect:/club/" + getPath(newTitle) + "/settings/club";
     }
 
+    @PostMapping("/club/remove")
+    public String removeClub(@CurrentAccount Account account, @PathVariable String path, Model model) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        clubService.remove(club);
+        return "redirect:/";
+    }
+
 }

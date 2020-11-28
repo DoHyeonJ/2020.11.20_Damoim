@@ -138,4 +138,9 @@ public class Club {
     public boolean canUpdateRecruiting() {
         return this.published && this.recruitingUpdateDateTime == null || this.recruitingUpdateDateTime.isBefore(LocalDateTime.now().minusHours(1));
     }
+
+    public boolean isRemovable() {
+        return !this.published; // 모임을 했던 동호회는 삭제불가
+    }
+
 }

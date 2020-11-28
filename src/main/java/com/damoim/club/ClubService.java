@@ -140,4 +140,12 @@ public class ClubService {
         club.setTitle(newTitle);
     }
 
+    public void remove(Club club) {
+        if (club.isRemovable()) {
+            clubRepository.delete(club);
+        } else {
+            throw new IllegalArgumentException("동호회를 삭제할 수 없습니다.");
+        }
+    }
+
 }
