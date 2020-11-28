@@ -14,10 +14,12 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     Club findByPath(String path);
 
     @EntityGraph(value = "Club.withTagsAndManagers", type = EntityGraph.EntityGraphType.FETCH)
-    Club findAccountWithTagsByPath(String path);
+    Club findClubWithTagsByPath(String path);
 
     @EntityGraph(value = "Club.withZonesAndManagers", type = EntityGraph.EntityGraphType.FETCH)
-    Club findAccountWithZonesByPath(String path);
+    Club findClubWithZonesByPath(String path);
 
+    @EntityGraph(value = "Club.withManagers", type = EntityGraph.EntityGraphType.FETCH)
+    Club findClubWithManagersByPath(String path);
 
 }

@@ -14,6 +14,7 @@ import com.damoim.zone.ZoneRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.h2.engine.Mode;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -177,8 +178,56 @@ public class ClubSettingsController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/club")
+    public String clubSettingForm(@CurrentAccount Account account, @PathVariable String path, Model model) {
+        Club club = clubService.getClubToUpdateZone(account, path);
+        model.addAttribute(account);
+        model.addAttribute(club);
+        return "club/settings/club";
+    }
 
+    @PostMapping("/club/publish")
+    public String publishClub(@CurrentAccount Account account, @PathVariable String path,
+                              RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        clubService.publish(club);
+        attributes.addFlashAttribute("message", "스터디를 공개했습니다.");
+        return "redirect:/club/" + getPath(path) + "/settings/club";
+    }
 
+    @PostMapping("/club/close")
+    public String closeClub(@CurrentAccount Account account, @PathVariable String path,
+                              RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        clubService.close(club);
+        attributes.addFlashAttribute("message", "스터디를 종료했습니다.");
+        return "redirect:/club/" + getPath(path) + "/settings/club";
+    }
 
+    @PostMapping("/recruit/start")
+    public String startRecruit(@CurrentAccount Account account, @PathVariable String path, Model model,
+                            RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        if (!club.canUpdateRecruiting()) {
+            attributes.addFlashAttribute("message", "인원모집 설정은 한시간에 한번만 변경할 수 있습니다.");
+            return "redirect:/club/" + getPath(path) + "/settings/club";
+        }
+        clubService.startRecruit(club);
+        attributes.addFlashAttribute("message", "인원 모집을 시작합니다.");
+        return "redirect:/club/" + getPath(path) + "/settings/club";
+    }
+
+    @PostMapping("/recruit/stop")
+    public String stopRecruit(@CurrentAccount Account account, @PathVariable String path, Model model,
+                               RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        if (!club.canUpdateRecruiting()) {
+            attributes.addFlashAttribute("message", "인원모집 설정은 한시간에 한번만 변경할 수 있습니다.");
+            return "redirect:/club/" + getPath(path) + "/settings/club";
+        }
+        clubService.stopRecruit(club);
+        attributes.addFlashAttribute("message", "인원 모집을 시작합니다.");
+        return "redirect:/club/" + getPath(path) + "/settings/club";
+    }
 
 }

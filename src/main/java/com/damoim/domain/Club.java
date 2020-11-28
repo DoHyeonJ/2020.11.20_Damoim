@@ -20,6 +20,9 @@ import java.util.Set;
 @NamedEntityGraph(name = "Club.withZonesAndManagers", attributeNodes = {
         @NamedAttributeNode("zones"),
         @NamedAttributeNode("managers")})
+@NamedEntityGraph(name = "Club.withManagers", attributeNodes = {
+        @NamedAttributeNode("managers")})
+
 
 
 @Entity
@@ -96,4 +99,43 @@ public class Club {
         return image != null ? image : "/images/default_banner.png";
     }
 
+    public void publish() {
+        if (!this.closed && !this.published) {
+            this.published = true;
+            this.publishedDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 동호회를 공개상태로 변경하거나, 한 시간 뒤 다시 시도하세요.");
+        }
+    }
+
+    public void close() {
+        if (this.published && !this.closed) {
+            this.closed = true;
+            this.closedDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("동호회를 종료할 수 없습니다. 동호회를 공개하지 않았거나 이미 종료한 동호회입니다.");
+        }
+    }
+
+    public void startRecruit() {
+        if (canUpdateRecruiting()) {
+            this.recruiting = true;
+            this.recruitingUpdateDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 동호회를 공개상태로 변경하거나, 한 시간 뒤 다시 시도하세요.");
+        }
+    }
+
+    public void stopRecruit() {
+        if (canUpdateRecruiting()) {
+            this.recruiting = false;
+            this.recruitingUpdateDateTime = LocalDateTime.now();
+        } else {
+            throw new RuntimeException("인원 모집을 시작할 수 없습니다. 동호회를 공개상태로 변경하거나, 한 시간 뒤 다시 시도하세요.");
+        }
+    }
+
+    public boolean canUpdateRecruiting() {
+        return this.published && this.recruitingUpdateDateTime == null || this.recruitingUpdateDateTime.isBefore(LocalDateTime.now().minusHours(1));
+    }
 }
