@@ -230,4 +230,36 @@ public class ClubSettingsController {
         return "redirect:/club/" + getPath(path) + "/settings/club";
     }
 
+    @PostMapping("/club/path")
+    public String updateClubPath(@CurrentAccount Account account, @PathVariable String path, String newPath,
+                                 Model model, RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        if (!clubService.isValidPath(newPath)) {
+            model.addAttribute(attributes);
+            model.addAttribute(club);
+            model.addAttribute("clubPathError", "해당 동호회 경로는 사용할 수 없습니다. 다른 값을 입력하세요.");
+            return "club/settings/club";
+        }
+
+        clubService.updateClubPath(club, newPath);
+        attributes.addFlashAttribute("message", "동호회 경로를 수정했습니다.");
+        return "redirect:/club/" + getPath(newPath) + "/settings/club";
+    }
+
+    @PostMapping("/club/title")
+    public String updateClubTitle(@CurrentAccount Account account, @PathVariable String path, String newTitle,
+                                 Model model, RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        if (!clubService.isValidTitle(newTitle)) {
+            model.addAttribute(attributes);
+            model.addAttribute(club);
+            model.addAttribute("clubTitleError", "동호회 이름을 다시 입력하세요");
+            return "club/settings/club";
+        }
+
+        clubService.updateClubTitle(club, newTitle);
+        attributes.addFlashAttribute("message", "동호회 이름을 수정했습니다.");
+        return "redirect:/club/" + getPath(newTitle) + "/settings/club";
+    }
+
 }

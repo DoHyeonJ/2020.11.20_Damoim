@@ -58,11 +58,11 @@
             <hr th:if="${!club.closed && club.recruiting && club.published}"/>
             <div class="row" th:if="${!club.closed && club.recruiting && club.published}">
                 <h5 class="col-sm-12">팀원 모집</h5>
-                <form class="col-sm-12" action="#" th:action="@{'/study/' + ${club.getPath()} + '/settings/recruit/stop'}" method="post" novalidate>
+                <form class="col-sm-12" action="#" th:action="@{'/club/' + ${club.getPath()} + '/settings/recruit/stop'}" method="post" novalidate>
                     <div class="alert alert-primary" role="alert">
                         팀원 모집을 중답합니다.<br/>
                         팀원 충원이 필요할 때 다시 팀원 모집을 시작할 수 있습니다.<br/>
-                        팀원 모집 정보는 한시간애 한번만 바꿀 수 있습니다.
+                        팀원 모집 정보는 한시간에 한번만 바꿀 수 있습니다.
                     </div>
                     <div class="form-group">
                         <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">팀원 모집 중단</button>
@@ -73,12 +73,12 @@
             <hr th:if="${!club.closed}"/>
             <div class="row" th:if="${!club.closed}">
                 <h5 class="col-sm-12">동호회 경로</h5>
-                <form class="col-sm-12 needs-validation" action="#" th:action="@{'/club/' + ${club.path} + '/settings/club/path'}" method="post" novalidate>
+                <form class="col-sm-12 needs-validation" th:action="@{'/club/' + ${club.path} + '/settings/club/path'}" method="post" novalidate>
                     <div class="alert alert-warning" role="alert">
                         동호회 경로를 수정하면 이전에 사용하던 경로로 동호회에 접근할 수 없으니 주의하세요. <br/>
                     </div>
                     <div class="form-group">
-                        <input id="path" type="text" name="newPath" th:value="${newPath}" class="form-control"
+                        <input id="path" type="text" name="newPath" th:value="${club.path}" class="form-control"
                                placeholder="예) club-path" aria-describedby="pathHelp" required>
                         <small id="pathHelp" class="form-text text-muted">
                             공백없이 문자, 숫자, 대시(-)와 언더바(_)만 3자 이상 20자 이내로 입력하세요. 동호회 홈 주소에 사용합니다. 예) /club/<b>club-path</b>
