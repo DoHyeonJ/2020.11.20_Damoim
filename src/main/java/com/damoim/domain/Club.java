@@ -5,6 +5,8 @@ import com.damoim.account.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +24,8 @@ import java.util.Set;
         @NamedAttributeNode("managers")})
 @NamedEntityGraph(name = "Club.withManagers", attributeNodes = {
         @NamedAttributeNode("managers")})
+@NamedEntityGraph(name = "Club.withMembers", attributeNodes = {
+        @NamedAttributeNode("members")})
 
 
 
@@ -91,10 +95,6 @@ public class Club {
         return this.managers.contains(userAccount.getAccount());
     }
 
-    public boolean addMember(Account account) {
-        return this.members.add(account);
-    }
-
     public String getImage() {
         return image != null ? image : "/images/default_banner.png";
     }
@@ -142,5 +142,18 @@ public class Club {
     public boolean isRemovable() {
         return !this.published; // 모임을 했던 동호회는 삭제불가
     }
+
+    public boolean addMember(Account account) {
+        return this.members.add(account);
+    }
+
+    public boolean removeMember(Account account) {
+        return this.getMembers().remove(account);
+    }
+
+    public String getEncodedPath() {
+        return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+    }
+
 
 }

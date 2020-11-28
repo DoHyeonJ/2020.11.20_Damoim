@@ -148,4 +148,11 @@ public class ClubService {
         }
     }
 
+    public void addMember(Club club, Account account) {
+        club.addMember(account);
+    }
+
+    public void removeMember(Club club, Account account) {
+        club.removeMember(account);
+    }
 }
