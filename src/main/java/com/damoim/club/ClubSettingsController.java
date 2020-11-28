@@ -20,7 +20,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Controller
-@RequestMapping("/study/{path}/settings")
+@RequestMapping("/club/{path}/settings")
 @RequiredArgsConstructor
 public class ClubSettingsController {
 
@@ -55,6 +55,37 @@ public class ClubSettingsController {
 
     private String getPath(String path) {
         return URLEncoder.encode(path, StandardCharsets.UTF_8);
+    }
+
+    @GetMapping("/banner")
+    public String clubImageForm(@CurrentAccount Account account, @PathVariable String path, Model model) {
+        Club club = clubService.getClubToUpdate(account, path);
+        model.addAttribute(account);
+        model.addAttribute(club);
+        return "club/settings/banner";
+    }
+
+    @PostMapping("/banner")
+    public String clubImageSubmit(@CurrentAccount Account account, @PathVariable String path,
+                                  String image, RedirectAttributes attributes) {
+        Club club = clubService.getClubToUpdate(account, path);
+        clubService.updateClubImage(club, image);
+        attributes.addFlashAttribute("message", "스터디 이미지를 수정했습니다.");
+        return "redirect:/club/" + getPath(path) + "/settings/banner";
+    }
+
+    @PostMapping("/banner/enable")
+    public String enableClubBanner(@CurrentAccount Account account, @PathVariable String path) {
+        Club club = clubService.getClubToUpdate(account, path);
+        clubService.enableClubBanner(club);
+        return "redirect:/club/" + getPath(path) + "/settings/banner";
+    }
+
+    @PostMapping("/banner/disable")
+    public String disableClubBanner(@CurrentAccount Account account, @PathVariable String path) {
+        Club club = clubService.getClubToUpdate(account, path);
+        clubService.disableClubBanner(club);
+        return "redirect:/club/" + getPath(path) + "/settings/banner";
     }
 
 

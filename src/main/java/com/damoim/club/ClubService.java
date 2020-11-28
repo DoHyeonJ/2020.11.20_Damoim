@@ -44,4 +44,17 @@ public class ClubService {
 
         return club;
     }
+
+    public void updateClubImage(Club club, String image) {
+        club.setImage(image);
+    }
+
+    public void enableClubBanner(Club club) {
+        club.setUseBanner(true);
+    }
+
+    public void disableClubBanner(Club club) {
+        club.setUseBanner(false);
+    }
+
 }

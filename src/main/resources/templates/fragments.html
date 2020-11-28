@@ -67,7 +67,7 @@
                 <a class="nav-link" th:href="@{/login}">로그인</a>
             </li>
             <li class="nav-item" sec:authorize="!isAuthenticated()">
-                <a class="nav-link" th:href="@{/sign-up}">가입</a>
+                <a class="nav-link" th:href="@{/sign-up}">회원가입</a>
             </li>
             <li class="nav-item" sec:authorize="isAuthenticated()">
                 <a class="nav-link" th:href="@{/notifications}">
@@ -206,7 +206,7 @@
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'description'}? active"
        href="#" th:href="@{'/club/' + ${club.path} + '/settings/description'}">소개</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'image'}? active"
-       href="#" th:href="@{'/club/' + ${club.path} + '/settings/image'}">배너 이미지</a>
+       href="#" th:href="@{'/club/' + ${club.path} + '/settings/banner'}">배너 이미지</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'tags'}? active"
        href="#" th:href="@{'/club/' + ${club.path} + '/settings/tags'}">동호회 주제</a>
     <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'zones'}? active"
@@ -249,6 +249,11 @@
     </button>
 </div>
 
+<script th:fragment="tooltip" type="application/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
 
 <footer th:fragment="footer">
     <div class="row justify-content-center">
