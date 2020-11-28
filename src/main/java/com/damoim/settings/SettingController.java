@@ -1,5 +1,8 @@
 package com.damoim.settings;
 
+import com.damoim.tag.TagForm;
+import com.damoim.tag.TagService;
+import com.damoim.zone.ZoneForm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.damoim.account.CurrentAccount;
@@ -59,6 +62,7 @@ public class SettingController {
     private final ModelMapper modelMapper;
     private final AccountService accountService;
     private final NicknameValidator nicknameValidator;
+    private final TagService tagService;
     private final TagRepository tagRepository;
     private final ObjectMapper objectMapper;
     private final ZoneRepository zoneRepository;
@@ -158,13 +162,7 @@ public class SettingController {
     @PostMapping(TAGS + "/add")
     @ResponseBody
     public ResponseEntity addTag(@CurrentAccount Account account, @RequestBody TagForm tagForm) {
-        String title = tagForm.getTagTitle();
-
-        Tag tag = tagRepository.findByTitle(title);
-        if (tag == null) {
-            tag = tagRepository.save(Tag.builder().title(title).build());
-        }
-
+        Tag tag = tagService.findOrCreateNew(tagForm.getTagTitle());
         accountService.addTag(account, tag);
         return ResponseEntity.ok().build();
     }

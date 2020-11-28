@@ -1,4 +1,4 @@
-package com.damoim.settings.form;
+package com.damoim.zone;
 
 import com.damoim.domain.Zone;
 import lombok.Data;

@@ -14,6 +14,13 @@ import java.util.Set;
         @NamedAttributeNode("zones"),
         @NamedAttributeNode("managers"),
         @NamedAttributeNode("members")})
+@NamedEntityGraph(name = "Club.withTagsAndManagers", attributeNodes = {
+        @NamedAttributeNode("tags"),
+        @NamedAttributeNode("managers")})
+@NamedEntityGraph(name = "Club.withZonesAndManagers", attributeNodes = {
+        @NamedAttributeNode("zones"),
+        @NamedAttributeNode("managers")})
+
 
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")

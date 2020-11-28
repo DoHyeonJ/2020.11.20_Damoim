@@ -1,4 +1,4 @@
-package com.damoim.settings.form;
+package com.damoim.tag;
 
 import lombok.Data;
 
