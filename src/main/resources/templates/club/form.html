@@ -64,16 +64,6 @@
     <div class="fragments.html :: footer"></div>
 </div>
 <script th:replace="fragments.html :: form-validation"></script>
-<script src="/node_modules/summernote/dist/summernote-bs4.js"></script>
-<script type="application/javascript">
-    $(function () {
-        $('#fullDescription').summernote({
-            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Noto Sans KR', 'Merriweather'],
-            placeholder: '동호회의 세부내용을 소개해주세요. ( 목표, 계획, 취지 등 )',
-            tabsize: 2,
-            height: 300
-        });
-    });
-</script>
+<script th:replace="fragments.html :: editor-script"></script>
 </body>
 </html>
