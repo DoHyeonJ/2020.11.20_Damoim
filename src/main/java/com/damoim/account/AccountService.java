@@ -1,8 +1,8 @@
 package com.damoim.account;
 
-import com.damoim.config.AppProperties;
 import com.damoim.domain.Account;
 import com.damoim.domain.Zone;
+import com.damoim.config.AppProperties;
 import com.damoim.mail.EmailMessage;
 import com.damoim.mail.EmailService;
 import com.damoim.settings.form.Notifications;
