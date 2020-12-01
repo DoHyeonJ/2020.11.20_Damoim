@@ -127,4 +127,13 @@ public class EventController {
         return "redirect:/club/" + club.getEncodedPath() + "/events/" + event.getId();
     }
 
+    @DeleteMapping("/events/{id}")
+    public String cancelEvent(@CurrentAccount Account account, @PathVariable String path,
+                              @PathVariable Long id) {
+        Club club = clubService.getClubToUpdateStatus(account, path);
+        eventService.deleteEvent(eventRepository.findById(id).orElseThrow());
+        return "redirect:/club/" + club.getEncodedPath() + "/events";
+    }
+
+
 }
