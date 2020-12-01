@@ -1,6 +1,7 @@
 package com.damoim.event;
 
 import com.damoim.account.CurrentAccount;
+import com.damoim.club.ClubRepository;
 import com.damoim.club.ClubService;
 import com.damoim.domain.Account;
 import com.damoim.domain.Club;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.print.DocFlavor;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/club/{path}")
@@ -28,6 +32,7 @@ public class EventController {
     private final ModelMapper modelMapper;
     private final EventValidator eventValidator;
     private final EventRepository eventRepository;
+    private final ClubRepository clubRepository;
 
     @InitBinder("eventForm")
     public void initBinder(WebDataBinder webDataBinder) {
@@ -62,8 +67,31 @@ public class EventController {
                            Model model) {
         model.addAttribute(account);
         model.addAttribute(eventRepository.findById(id).orElseThrow());
-        model.addAttribute(clubService.getClub(path));
+        model.addAttribute(clubRepository.findClubWithManagersByPath(path));
         return "event/view";
+    }
+
+    @GetMapping("/events")
+    public String viewClubEvents(@CurrentAccount Account account, @PathVariable String path, Model model) {
+        Club club = clubService.getClub(path);
+        model.addAttribute(account);
+        model.addAttribute(club);
+
+        List<Event> events = eventRepository.findByClubOrderByStartDateTime(club);
+        List<Event> newEvents = new ArrayList<>();
+        List<Event> oldEvents = new ArrayList<>();
+        events.forEach(e -> {
+            if (e.getEndDateTime().isBefore(LocalDateTime.now())) {
+                oldEvents.add(e);
+            } else {
+                newEvents.add(e);
+            }
+        });
+
+        model.addAttribute("newEvents", newEvents);
+        model.addAttribute("oldEvents", oldEvents);
+
+        return "club/events";
     }
 
 }
