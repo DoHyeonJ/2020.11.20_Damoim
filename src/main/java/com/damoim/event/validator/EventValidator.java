@@ -29,7 +29,7 @@ public class EventValidator implements Validator {
         }
 
         if (isNotValidStartDateTime(eventForm)) {
-            errors.rejectValue("startDateTime", "wrong.datetime", "모임 시작 일시를 정호가히 입력하세요.");
+            errors.rejectValue("startDateTime", "wrong.datetime", "모임 시작 일시를 정확히 입력하세요.");
         }
 
 
@@ -41,11 +41,11 @@ public class EventValidator implements Validator {
     }
 
     private boolean isNotValidEndDateTime(EventForm eventForm) {
-        return eventForm.getEndEnrollmentDateTime().isBefore(LocalDateTime.now());
+        LocalDateTime endDateTime = eventForm.getEndDateTime();
+        return endDateTime.isBefore(eventForm.getStartDateTime()) || endDateTime.isBefore(eventForm.getEndEnrollmentDateTime());
     }
 
     private boolean isNotValidEndEnrollmentDateTime(EventForm eventForm) {
-        LocalDateTime endDateTime = eventForm.getEndDateTime();
-        return endDateTime.isBefore(eventForm.getStartDateTime()) || endDateTime.isBefore(eventForm.getEndEnrollmentDateTime());
+        return eventForm.getEndEnrollmentDateTime().isBefore(LocalDateTime.now());
     }
 }
