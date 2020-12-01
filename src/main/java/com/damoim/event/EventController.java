@@ -3,6 +3,7 @@ package com.damoim.event;
 import com.damoim.account.CurrentAccount;
 import com.damoim.club.ClubRepository;
 import com.damoim.club.ClubService;
+import com.damoim.club.validator.ClubFormValidator;
 import com.damoim.domain.Account;
 import com.damoim.domain.Club;
 import com.damoim.domain.Event;
@@ -92,6 +93,38 @@ public class EventController {
         model.addAttribute("oldEvents", oldEvents);
 
         return "club/events";
+    }
+
+    @GetMapping("/events/{id}/edit")
+    public String updateEventForm(@CurrentAccount Account account, @PathVariable String path,
+                                  @PathVariable Long id, Model model) {
+        Club club = clubService.getClubToUpdate(account, path);
+        Event event = eventRepository.findById(id).orElseThrow();
+        model.addAttribute(club);
+        model.addAttribute(account);
+        model.addAttribute(event);
+        model.addAttribute(modelMapper.map(event, EventForm.class));
+        return "event/update-form";
+    }
+
+    @PostMapping("/events/{id}/edit")
+    public String updateEventSubmit(@CurrentAccount Account account, @PathVariable String path,
+                                    @PathVariable Long id, @Valid EventForm eventForm, Errors errors,
+                                    Model model) {
+        Club club = clubService.getClubToUpdate(account, path);
+        Event event = eventRepository.findById(id).orElseThrow();
+        eventForm.setEventType(event.getEventType());
+        eventValidator.validateUpdateForm(eventForm, event, errors);
+
+        if (errors.hasErrors()) {
+            model.addAttribute(account);
+            model.addAttribute(club);
+            model.addAttribute(event);
+            return "event/update-form";
+        }
+
+        eventService.updateEvent(event, eventForm);
+        return "redirect:/club/" + club.getEncodedPath() + "/events/" + event.getId();
     }
 
 }
