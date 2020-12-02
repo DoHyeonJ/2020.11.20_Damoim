@@ -38,4 +38,4 @@ src/main/resources/static/node
 src/main/resources/static/package-lock.json
 
 ### Config ###
-config
+src/main/java/com/damoim/infra/config
