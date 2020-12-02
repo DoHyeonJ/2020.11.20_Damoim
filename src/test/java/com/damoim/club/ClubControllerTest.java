@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-class ClubControllerTest {
+public class ClubControllerTest {
 
     @Autowired protected MockMvc mockMvc;
     @Autowired protected ClubService clubService;
