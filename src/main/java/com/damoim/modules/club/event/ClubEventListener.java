@@ -21,6 +21,8 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Async
@@ -48,6 +50,25 @@ public class ClubEventListener {
 
             if (account.isClubCreatedByWeb()) {
                 createNotification(club, account, club.getShortDescription(), NotificationType.CLUB_CREATED);
+            }
+        });
+    }
+
+    @EventListener
+    public void handleClubUpdateEvent(ClubUpdateEvent clubUpdateEvent) {
+        Club club = clubRepository.findClubWithManagersAndMembersById(clubUpdateEvent.getClub().getId());
+        Set<Account> accounts = new HashSet<>();
+        accounts.addAll(club.getManagers());
+        accounts.addAll(club.getMembers());
+
+        accounts.forEach(account -> {
+            if (account.isClubUpdatedByEmail()){
+                sendClubCreatedEmail(club, account, clubUpdateEvent.getMessage(),
+                        "다모임, '"+ club.getTitle() + "' 동호회에 새소식이 있습니다.");
+            }
+
+            if (account.isClubUpdatedByWeb()) {
+                createNotification(club, account, clubUpdateEvent.getMessage(), NotificationType.CLUB_UPDATED);
             }
         });
     }
