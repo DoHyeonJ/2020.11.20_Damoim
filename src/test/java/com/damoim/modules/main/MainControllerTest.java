@@ -1,5 +1,6 @@
 package com.damoim.modules.main;
 
+import com.damoim.infra.MockMvcTest;
 import com.damoim.modules.account.form.SignUpForm;
 import com.damoim.modules.account.AccountRepository;
 import com.damoim.modules.account.AccountService;
@@ -20,8 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@MockMvcTest
 class MainControllerTest {
 
     @Autowired

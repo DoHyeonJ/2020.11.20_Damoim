@@ -1,5 +1,7 @@
 package com.damoim.modules.club;
 
+import com.damoim.infra.MockMvcTest;
+import com.damoim.modules.account.AccountFactory;
 import com.damoim.modules.account.WithAccount;
 import com.damoim.modules.account.AccountRepository;
 import com.damoim.modules.account.Account;
@@ -21,16 +23,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@RequiredArgsConstructor
+@MockMvcTest
 public class ClubControllerTest {
 
-    @Autowired protected MockMvc mockMvc;
-    @Autowired protected ClubService clubService;
-    @Autowired protected ClubRepository clubRepository;
-    @Autowired protected AccountRepository accountRepository;
+    @Autowired
+    MockMvc mockMvc;
+    @Autowired
+    ClubService clubService;
+    @Autowired
+    ClubRepository clubRepository;
+    @Autowired
+    AccountRepository accountRepository;
+    @Autowired
+    AccountFactory accountFactory;
+    @Autowired
+    ClubFactory clubFactory;
 
     @Test
     @WithAccount("dohyeon")
@@ -84,9 +91,9 @@ public class ClubControllerTest {
     @WithAccount("dohyeon")
     @DisplayName("동호회 가입")
     void joinClub() throws Exception {
-        Account gilDong = createAccount("gilDong");
+        Account gilDong = accountFactory.createAccount("gilDong");
 
-        Club club = createClub("test-club", gilDong);
+        Club club = clubFactory.createClub("test-club", gilDong);
 
         mockMvc.perform(get("/club/" + club.getPath() + "/join"))
                 .andExpect(status().is3xxRedirection())
@@ -100,8 +107,8 @@ public class ClubControllerTest {
     @WithAccount("dohyeon")
     @DisplayName("동호회 탈퇴")
     void leaveClub() throws Exception {
-        Account gilDong = createAccount("gilDong");
-        Club club = createClub("test-club", gilDong);
+        Account gilDong = accountFactory.createAccount("gilDong");
+        Club club = clubFactory.createClub("test-club", gilDong);
 
         Account account = accountRepository.findByNickname("dohyeon");
         clubService.addMember(club, account);
@@ -112,23 +119,5 @@ public class ClubControllerTest {
 
         assertFalse(club.getMembers().contains(account));
     }
-
-
-    protected Club createClub(String path, Account manager) {
-        Club club = new Club();
-        club.setPath(path);
-        clubService.createNewClub(club, manager);
-        return club;
-    }
-
-    protected Account createAccount(String nickname) {
-        Account account = new Account();
-        account.setNickname(nickname);
-        account.setEmail(nickname + "@email.com");
-        accountRepository.save(account);
-        return account;
-
-    }
-
 
 }

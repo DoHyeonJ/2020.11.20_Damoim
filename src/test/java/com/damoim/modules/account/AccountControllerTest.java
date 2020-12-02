@@ -1,5 +1,6 @@
 package com.damoim.modules.account;
 
+import com.damoim.infra.MockMvcTest;
 import com.damoim.modules.account.Account;
 import com.damoim.infra.mail.EmailMessage;
 import com.damoim.infra.mail.EmailService;
@@ -23,9 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
+@MockMvcTest
 class AccountControllerTest {
 
     @Autowired

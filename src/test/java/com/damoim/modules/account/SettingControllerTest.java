@@ -1,5 +1,6 @@
 package com.damoim.modules.account;
 
+import com.damoim.infra.MockMvcTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.damoim.modules.tag.Tag;
 import com.damoim.modules.zone.Zone;
@@ -26,9 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
+@MockMvcTest
 class SettingControllerTest {
 
     @Autowired
