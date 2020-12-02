@@ -1,4 +1,4 @@
-package com.damoim.modules.event;
+package com.damoim.modules.club.event;
 
 import com.damoim.infra.config.AppProperties;
 import com.damoim.infra.mail.EmailMessage;
@@ -37,7 +37,7 @@ public class ClubEventListener {
     private final NotificationRepository notificationRepository;
 
     @EventListener
-    public void handelClubCreatedEvent(ClubCreatedEvent clubCreatedEvent) {
+    public void handleClubCreatedEvent(ClubCreatedEvent clubCreatedEvent) {
         Club club = clubRepository.findClubWithTagsAndZonesById(clubCreatedEvent.getClub().getId());
         Iterable<Account> accounts = accountRepository.findAll(AccountPredicates.findByTagsAndZones(club.getTags(), club.getZones()));
         accounts.forEach(account -> {
@@ -56,7 +56,7 @@ public class ClubEventListener {
         notification.setTitle(club.getTitle());
         notification.setLink("/club/" + club.getEncodedPath());
         notification.setChecked(false);
-        notification.setCreatedLocalDateTime(LocalDateTime.now());
+        notification.setCreatedDateTime(LocalDateTime.now());
         notification.setMessage(club.getShortDescription());
         notification.setAccount(account);
         notification.setNotificationType(NotificationType.CLUB_CREATED);

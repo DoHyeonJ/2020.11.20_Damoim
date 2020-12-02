@@ -2,7 +2,7 @@ package com.damoim.modules.club;
 
 import com.damoim.modules.club.form.ClubDescriptionForm;
 import com.damoim.modules.account.Account;
-import com.damoim.modules.event.ClubCreatedEvent;
+import com.damoim.modules.club.event.ClubCreatedEvent;
 import com.damoim.modules.tag.Tag;
 import com.damoim.modules.zone.Zone;
 import com.damoim.modules.event.EnrollmentRepository;
@@ -22,7 +22,6 @@ public class ClubService {
 
     private final ClubRepository clubRepository;
     private final ModelMapper modelMapper;
-    private final EnrollmentRepository enrollmentRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     private void checkIfManager(Account account, Club club) {

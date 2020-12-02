@@ -1,4 +1,4 @@
-package com.damoim.modules.event;
+package com.damoim.modules.club.event;
 
 import com.damoim.modules.club.Club;
 import lombok.Getter;
