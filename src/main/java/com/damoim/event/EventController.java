@@ -135,5 +135,13 @@ public class EventController {
         return "redirect:/club/" + club.getEncodedPath() + "/events";
     }
 
+    @PostMapping("/events/{id}/enroll")
+    public String newEnrollment(@CurrentAccount Account account,
+                                @PathVariable String path, @PathVariable Long id) {
+        Club club = clubService.getClubToEnroll(path);
+        eventService.cancelEnrollment(eventRepository.findById(id).orElseThrow(), account);
+        return "redirect:/club/" + club.getEncodedPath() + "/events/" + id;
+    }
+
 
 }

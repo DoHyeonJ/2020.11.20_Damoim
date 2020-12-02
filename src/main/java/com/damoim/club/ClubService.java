@@ -5,6 +5,7 @@ import com.damoim.domain.Account;
 import com.damoim.domain.Club;
 import com.damoim.domain.Tag;
 import com.damoim.domain.Zone;
+import com.damoim.event.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -20,6 +21,7 @@ public class ClubService {
 
     private final ClubRepository clubRepository;
     private final ModelMapper modelMapper;
+    private final EnrollmentRepository enrollmentRepository;
 
     private void checkIfManager(Account account, Club club) {
         if (!account.isManagerOf(club)) {
@@ -154,5 +156,11 @@ public class ClubService {
 
     public void removeMember(Club club, Account account) {
         club.removeMember(account);
+    }
+
+    public Club getClubToEnroll(String path) {
+        Club club = clubRepository.findClubOnlyByPath(path);
+        checkIfExistingClub(path, club);
+        return club;
     }
 }

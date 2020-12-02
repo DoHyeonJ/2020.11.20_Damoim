@@ -25,4 +25,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     @EntityGraph(value = "Club.withMembers", type = EntityGraph.EntityGraphType.FETCH)
     Club findClubWithMembersByPath(String path);
 
+    Club findClubOnlyByPath(String path);
+
 }
