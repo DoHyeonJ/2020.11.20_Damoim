@@ -6,8 +6,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class ClubCreatedEvent {
+public class ClubUpdateEvent {
 
     private final Club club;
+
+    private final String message;
 
 }

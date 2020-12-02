@@ -42,38 +42,39 @@ public class ClubEventListener {
         Iterable<Account> accounts = accountRepository.findAll(AccountPredicates.findByTagsAndZones(club.getTags(), club.getZones()));
         accounts.forEach(account -> {
             if (account.isClubCreatedByEmail()) {
-                sendClubCreatedEmail(club, account);
+                sendClubCreatedEmail(club, account, "새로운 동호회가 생겼습니다.",
+                        "다모임, '" + club.getTitle() + "' 스터디가 생겼습니다.");
             }
 
             if (account.isClubCreatedByWeb()) {
-                saveClubCreatedNotification(club, account);
+                createNotification(club, account, club.getShortDescription(), NotificationType.CLUB_CREATED);
             }
         });
     }
 
-    private void saveClubCreatedNotification(Club club, Account account) {
+    private void createNotification(Club club, Account account, String message, NotificationType notificationType) {
         Notification notification = new Notification();
         notification.setTitle(club.getTitle());
         notification.setLink("/club/" + club.getEncodedPath());
         notification.setChecked(false);
         notification.setCreatedDateTime(LocalDateTime.now());
-        notification.setMessage(club.getShortDescription());
+        notification.setMessage(message);
         notification.setAccount(account);
-        notification.setNotificationType(NotificationType.CLUB_CREATED);
+        notification.setNotificationType(notificationType);
         notificationRepository.save(notification);
     }
 
-    private void sendClubCreatedEmail(Club club, Account account) {
+    private void sendClubCreatedEmail(Club club, Account account, String contextMessage, String emailSubject) {
         Context context = new Context();
         context.setVariable("nickname", account.getNickname());
         context.setVariable("link", "/club/" + club.getEncodedPath());
         context.setVariable("linkName", club.getTitle());
-        context.setVariable("message", "새로운 동호회가 생겼습니다.");
+        context.setVariable("message", contextMessage);
         context.setVariable("host", appProperties.getHost());
         String message = templateEngine.process("mail/simple-link", context);
 
         EmailMessage emailMessage = EmailMessage.builder()
-                .subject("다모임, '" + club.getTitle() + "' 동호회가 생겼습니다.")
+                .subject(emailSubject)
                 .to(account.getEmail())
                 .message(message)
                 .build();

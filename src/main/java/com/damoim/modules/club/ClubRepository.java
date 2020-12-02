@@ -9,23 +9,26 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     boolean existsByPath(String path);
 
-    @EntityGraph(value = "Club.withAll", type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"tags", "zones", "managers", "members"}, type = EntityGraph.EntityGraphType.LOAD)
     Club findByPath(String path);
 
-    @EntityGraph(value = "Club.withTagsAndManagers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"tags", "managers"})
     Club findClubWithTagsByPath(String path);
 
-    @EntityGraph(value = "Club.withZonesAndManagers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"zones", "managers"})
     Club findClubWithZonesByPath(String path);
 
-    @EntityGraph(value = "Club.withManagers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = "managers")
     Club findClubWithManagersByPath(String path);
 
-    @EntityGraph(value = "Club.withMembers", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = "members")
     Club findClubWithMembersByPath(String path);
 
     Club findClubOnlyByPath(String path);
 
-    @EntityGraph(value = "Club.withTagsAndZones", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(attributePaths = {"zones", "tags"})
     Club findClubWithTagsAndZonesById(Long id);
+
+    @EntityGraph(attributePaths = {"members", "managers"})
+    Club findClubWithManagersAndMembersById(Long id);
 }

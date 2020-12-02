@@ -1,5 +1,6 @@
 package com.damoim.modules.club;
 
+import com.damoim.modules.club.event.ClubUpdateEvent;
 import com.damoim.modules.club.form.ClubDescriptionForm;
 import com.damoim.modules.account.Account;
 import com.damoim.modules.club.event.ClubCreatedEvent;
@@ -51,6 +52,7 @@ public class ClubService {
 
     public void updateClubDescription(Club club, ClubDescriptionForm clubDescriptionForm) {
         modelMapper.map(clubDescriptionForm, club);
+        eventPublisher.publishEvent(new ClubUpdateEvent(club, "동호회 소개를 수정했습니다."));
     }
 
     public Club getClubToUpdate(Account account, String path) {
@@ -115,14 +117,17 @@ public class ClubService {
 
     public void close(Club club) {
         club.close();
+        eventPublisher.publishEvent(new ClubUpdateEvent(club, "동호회를 종료했습니다."));
     }
 
     public void startRecruit(Club club) {
         club.startRecruit();
+        eventPublisher.publishEvent(new ClubUpdateEvent(club, "팀원 모집을 시작합니다."));
     }
 
     public void stopRecruit(Club club) {
         club.stopRecruit();
+        eventPublisher.publishEvent(new ClubUpdateEvent(club, "팀원 모집을 중단했습니다."));
     }
 
     public boolean isValidPath(String newPath) {
