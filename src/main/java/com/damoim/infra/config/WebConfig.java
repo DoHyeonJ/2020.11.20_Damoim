@@ -1,5 +1,6 @@
 package com.damoim.infra.config;
 
+import com.damoim.modules.notification.NotificationInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.context.annotation.Configuration;
@@ -14,11 +15,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
+    private final NotificationInterceptor notificationInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> staticResourcesPath = Arrays.stream(StaticResourceLocation.values())
                 .flatMap(StaticResourceLocation::getPatterns)
                 .collect(Collectors.toList());
         staticResourcesPath.add("/node_modules/**");
+
+        registry.addInterceptor(notificationInterceptor)
+                .excludePathPatterns(staticResourcesPath);
     }
 }
