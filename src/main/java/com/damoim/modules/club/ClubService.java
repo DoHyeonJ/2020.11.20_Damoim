@@ -23,7 +23,7 @@ public class ClubService {
     private final EnrollmentRepository enrollmentRepository;
 
     private void checkIfManager(Account account, Club club) {
-        if (!account.isManagerOf(club)) {
+        if (!club.isManagedBy(account)) {
             throw new AccessDeniedException("해당 기능을 사용할 수 없습니다.");
         }
     }
