@@ -2,11 +2,13 @@ package com.damoim.modules.club;
 
 import com.damoim.modules.club.form.ClubDescriptionForm;
 import com.damoim.modules.account.Account;
+import com.damoim.modules.event.ClubCreatedEvent;
 import com.damoim.modules.tag.Tag;
 import com.damoim.modules.zone.Zone;
 import com.damoim.modules.event.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ public class ClubService {
     private final ClubRepository clubRepository;
     private final ModelMapper modelMapper;
     private final EnrollmentRepository enrollmentRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     private void checkIfManager(Account account, Club club) {
         if (!club.isManagedBy(account)) {
@@ -37,6 +40,7 @@ public class ClubService {
     public Club createNewClub(Club club, Account account) {
         Club newClub = clubRepository.save(club);
         newClub.addManager(account);
+        eventPublisher.publishEvent(new ClubCreatedEvent(newClub));
         return newClub;
     }
 
@@ -107,6 +111,7 @@ public class ClubService {
 
     public void publish(Club club) {
         club.publish();
+        this.eventPublisher.publishEvent(new ClubCreatedEvent(club));
     }
 
     public void close(Club club) {

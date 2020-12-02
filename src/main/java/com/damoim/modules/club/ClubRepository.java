@@ -26,4 +26,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     Club findClubOnlyByPath(String path);
 
+    @EntityGraph(value = "Club.withTagsAndZones", type = EntityGraph.EntityGraphType.FETCH)
+    Club findClubWithTagsAndZonesById(Long id);
 }
