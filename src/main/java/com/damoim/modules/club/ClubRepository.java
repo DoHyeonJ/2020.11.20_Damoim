@@ -4,8 +4,10 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional(readOnly = true)
-public interface ClubRepository extends JpaRepository<Club, Long> {
+public interface ClubRepository extends JpaRepository<Club, Long>, ClubRepositoryExtension {
 
     boolean existsByPath(String path);
 
@@ -31,4 +33,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     @EntityGraph(attributePaths = {"members", "managers"})
     Club findClubWithManagersAndMembersById(Long id);
+
+    List<Club> findByKeyword(String keyword);
 }
