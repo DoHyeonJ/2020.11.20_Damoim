@@ -1,9 +1,12 @@
 package com.damoim.modules.main;
 
+import com.damoim.modules.account.AccountRepository;
 import com.damoim.modules.account.CurrentAccount;
 import com.damoim.modules.account.Account;
 import com.damoim.modules.club.Club;
 import com.damoim.modules.club.ClubRepository;
+import com.damoim.modules.club.event.event.EnrollmentRejectedEvent;
+import com.damoim.modules.event.EnrollmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +23,23 @@ import java.util.List;
 public class MainController {
 
     private final ClubRepository clubRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final AccountRepository accountRepository;
 
     @GetMapping("/")
     public String home(@CurrentAccount Account account, Model model) {
         if (account != null) {
-            model.addAttribute(account);
+            Account accountLoaded = accountRepository.findAccountWithTagsAndZonesById(account.getId());
+            model.addAttribute(accountLoaded);
+            model.addAttribute("enrollmentList", enrollmentRepository.findByAccountAndAcceptedOrderByEnrolledAtDesc(accountLoaded, true));
+            model.addAttribute("clubList", clubRepository.findByAccount(
+                    accountLoaded.getTags(),
+                    accountLoaded.getZones()));
+            model.addAttribute("clubManagerOf",
+                    clubRepository.findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            model.addAttribute("clubMemberOf",
+                    clubRepository.findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+            return "index-after-login";
         }
 
         model.addAttribute("clubList", clubRepository.findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(true, false));

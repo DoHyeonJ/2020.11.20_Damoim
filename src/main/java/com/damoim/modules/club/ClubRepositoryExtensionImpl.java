@@ -2,7 +2,9 @@ package com.damoim.modules.club;
 
 import com.damoim.modules.account.QAccount;
 import com.damoim.modules.tag.QTag;
+import com.damoim.modules.tag.Tag;
 import com.damoim.modules.zone.QZone;
+import com.damoim.modules.zone.Zone;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
+import java.util.Set;
 
 public class ClubRepositoryExtensionImpl extends QuerydslRepositorySupport implements ClubRepositoryExtension {
 
@@ -28,9 +31,24 @@ public class ClubRepositoryExtensionImpl extends QuerydslRepositorySupport imple
                 .leftJoin(club.tags, QTag.tag).fetchJoin()
                 .leftJoin(club.zones, QZone.zone).fetchJoin()
                 .distinct();
-        JPQLQuery<Club> pagebleQuery = getQuerydsl().applyPagination(pageable, query);
-        QueryResults<Club> fetchResults = pagebleQuery.fetchResults();
+        JPQLQuery<Club> pageableQuery = getQuerydsl().applyPagination(pageable, query);
+        QueryResults<Club> fetchResults = pageableQuery.fetchResults();
         return new PageImpl<>(fetchResults.getResults(), pageable, fetchResults.getTotal());
+    }
+
+    @Override
+    public List<Club> findByAccount(Set<Tag> tags, Set<Zone> zones) {
+        QClub club = QClub.club;
+        JPQLQuery<Club> query = from(club).where(club.published.isTrue()
+                .and(club.closed.isFalse())
+                .and(club.tags.any().in(tags))
+                .and(club.zones.any().in(zones)))
+                .leftJoin(club.tags, QTag.tag).fetchJoin()
+                .leftJoin(club.zones, QZone.zone).fetchJoin()
+                .orderBy(club.publishedDateTime.desc())
+                .distinct()
+                .limit(9);
+        return query.fetch();
     }
 
 }

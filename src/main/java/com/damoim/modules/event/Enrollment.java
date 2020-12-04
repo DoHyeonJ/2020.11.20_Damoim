@@ -9,6 +9,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NamedEntityGraph(
+        name = "Enrollment.withEventAndClub",
+        attributeNodes = {
+                @NamedAttributeNode(value = "event", subgraph = "club")
+        },
+        subgraphs = @NamedSubgraph(name = "club", attributeNodes = @NamedAttributeNode("club"))
+)
+
 @Entity
 @Getter @Setter @EqualsAndHashCode(of = "id")
 public class Enrollment {
