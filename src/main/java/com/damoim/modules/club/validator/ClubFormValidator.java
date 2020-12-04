@@ -23,7 +23,7 @@ public class ClubFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ClubForm clubForm = (ClubForm)target;
         if (clubRepository.existsByPath(clubForm.getPath())) {
-            errors.rejectValue("path", "wrong.path", "해당 스터디 경로값을 사용할 수 없습니다.");
+            errors.rejectValue("path", "wrong.path", "해당 동호회 경로값을 사용할 수 없습니다.");
         }
     }
 }

@@ -25,7 +25,7 @@
             </form>
             <form th:if="${club.useBanner}" action="#" th:action="@{'/club/' + ${club.getPath()} + '/settings/banner/disable'}" method="post" novalidate>
                 <div class="alert alert-info" role="alert">
-                    동호회 메뉴에서 스터디 배너 이미지를 사용하지 않습니다. 동호회 목록에서는 배너 이미지를 사용합니다.
+                    동호회 메뉴에서 동호회 배너 이미지를 사용하지 않습니다. 동호회 목록에서는 배너 이미지를 사용합니다.
                 </div>
                 <div class="form-group">
                     <button class="btn btn-outline-primary btn-block" type="submit" aria-describedby="submitHelp">배너 이미지 사용하지 않기</button>
@@ -96,7 +96,7 @@
                         }
 
                         let img = document.createElement("img");
-                        img.id = 'new-study';
+                        img.id = 'new-club';
                         img.src = e.target.result;
                         img.setAttribute('width', '100%');
 

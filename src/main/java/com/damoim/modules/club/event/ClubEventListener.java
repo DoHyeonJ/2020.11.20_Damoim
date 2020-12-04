@@ -45,7 +45,7 @@ public class ClubEventListener {
         accounts.forEach(account -> {
             if (account.isClubCreatedByEmail()) {
                 sendClubCreatedEmail(club, account, "새로운 동호회가 생겼습니다.",
-                        "다모임, '" + club.getTitle() + "' 스터디가 생겼습니다.");
+                        "다모임, '" + club.getTitle() + "' 동호회가 생겼습니다.");
             }
 
             if (account.isClubCreatedByWeb()) {
