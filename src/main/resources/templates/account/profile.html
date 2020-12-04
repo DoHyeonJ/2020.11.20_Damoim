@@ -73,7 +73,25 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="v-pills-club" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                    Club
+                    <div class="col-md-3">
+                        <h5 class="font-weight-light" th:if="${#lists.isEmpty(clubManagerOf)}">관리중인 동호회가 없습니다.</h5>
+                        <h5 class="font-weight-light" th:if="${!#lists.isEmpty(clubManagerOf)}">관리중인 동호회</h5>
+                        <div class="list-group" th:if="${!#lists.isEmpty(clubManagerOf)}">
+                            <a href="#" th:href="@{'/club/' + ${club.path}}" th:text="${club.title}"
+                               class="list-group-item list-group-item-action" th:each="club: ${clubManagerOf}">
+                                club title
+                            </a>
+                        </div>
+
+                        <h5 class="font-weight-light mt-3" th:if="${#lists.isEmpty(clubMemberOf)}">참여중인 동호회가 없습니다.</h5>
+                        <h5 class="font-weight-light mt-3" th:if="${!#lists.isEmpty(clubMemberOf)}">참여중인 동호회</h5>
+                        <div class="list-group" th:if="${!#lists.isEmpty(clubMemberOf)}">
+                            <a href="#" th:href="@{'/club/' + ${club.path}}" th:text="${club.title}"
+                               class="list-group-item list-group-item-action" th:each="club: ${clubMemberOf}">
+                                club title
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ package com.damoim.modules.account;
 
 import com.damoim.modules.account.validator.SignUpFormValidator;
 import com.damoim.modules.account.form.SignUpForm;
+import com.damoim.modules.club.ClubRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class AccountController {
     private final AccountRepository accountRepository;
     private final SignUpFormValidator signUpFormValidator;
     private final AccountService accountService;
+    private final ClubRepository clubRepository;
 
 
     @InitBinder("signUpForm")
@@ -86,6 +88,10 @@ public class AccountController {
         Account accountToView = accountService.getAccount(nickname);
         model.addAttribute(accountToView);
         model.addAttribute("isOwner", accountToView.equals(account));
+        model.addAttribute("clubManagerOf",
+                clubRepository.findAllByManagersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
+        model.addAttribute("clubMemberOf",
+                clubRepository.findAllByMembersContainingAndClosedOrderByPublishedDateTimeDesc(account, false));
         return "account/profile";
     }
 

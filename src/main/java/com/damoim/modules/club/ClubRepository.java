@@ -44,4 +44,8 @@ public interface ClubRepository extends JpaRepository<Club, Long>, ClubRepositor
     List<Club> findFirst5ByManagersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
 
     List<Club> findFirst5ByMembersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
+
+    List<Club> findAllByManagersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
+
+    List<Club> findAllByMembersContainingAndClosedOrderByPublishedDateTimeDesc(Account account, boolean closed);
 }

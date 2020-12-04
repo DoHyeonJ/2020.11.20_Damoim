@@ -4,6 +4,7 @@ import com.damoim.modules.account.form.NicknameForm;
 import com.damoim.modules.account.form.Notifications;
 import com.damoim.modules.account.form.PasswordForm;
 import com.damoim.modules.account.form.Profile;
+import com.damoim.modules.club.ClubRepository;
 import com.damoim.modules.tag.TagForm;
 import com.damoim.modules.tag.TagService;
 import com.damoim.modules.zone.ZoneForm;
