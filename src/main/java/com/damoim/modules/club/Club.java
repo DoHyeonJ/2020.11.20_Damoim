@@ -61,6 +61,8 @@ public class Club {
 
     private boolean useBanner;
 
+    private int memberCount;
+
     public void addManager(Account account) {
         this.managers.add(account);
     }
@@ -128,12 +130,14 @@ public class Club {
         return !this.published; // 모임을 했던 동호회는 삭제불가
     }
 
-    public boolean addMember(Account account) {
-        return this.members.add(account);
+    public void addMember(Account account) {
+        this.getMembers().add(account);
+        this.memberCount++;
     }
 
-    public boolean removeMember(Account account) {
-        return this.getMembers().remove(account);
+    public void removeMember(Account account) {
+        this.getMembers().remove(account);
+        this.memberCount--;
     }
 
     public String getEncodedPath() {

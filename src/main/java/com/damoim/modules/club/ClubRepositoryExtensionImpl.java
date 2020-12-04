@@ -27,7 +27,6 @@ public class ClubRepositoryExtensionImpl extends QuerydslRepositorySupport imple
                 .or(club.zones.any().localNameOfCity.containsIgnoreCase(keyword)))
                 .leftJoin(club.tags, QTag.tag).fetchJoin()
                 .leftJoin(club.zones, QZone.zone).fetchJoin()
-                .leftJoin(club.members, QAccount.account).fetchJoin()
                 .distinct();
         JPQLQuery<Club> pagebleQuery = getQuerydsl().applyPagination(pageable, query);
         QueryResults<Club> fetchResults = pagebleQuery.fetchResults();
