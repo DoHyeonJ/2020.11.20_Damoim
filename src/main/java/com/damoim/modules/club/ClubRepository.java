@@ -34,5 +34,5 @@ public interface ClubRepository extends JpaRepository<Club, Long>, ClubRepositor
     @EntityGraph(attributePaths = {"members", "managers"})
     Club findClubWithManagersAndMembersById(Long id);
 
-    List<Club> findByKeyword(String keyword);
+    List<Club> findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(boolean published, boolean closed);
 }

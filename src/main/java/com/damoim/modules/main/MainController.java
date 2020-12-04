@@ -27,6 +27,7 @@ public class MainController {
             model.addAttribute(account);
         }
 
+        model.addAttribute("clubList", clubRepository.findFirst9ByPublishedAndClosedOrderByPublishedDateTimeDesc(true, false));
         return "index";
     }
 
@@ -38,7 +39,7 @@ public class MainController {
     @GetMapping("/search/club")
     public String searchClub(String keyword, Model model,
                              @PageableDefault(size = 9, sort = "publishedDateTime", direction = Sort.Direction.DESC)
-                             Pageable pageable) {
+                                     Pageable pageable) {
         Page<Club> clubPage = clubRepository.findByKeyword(keyword, pageable);
         model.addAttribute("clubPage", clubPage);
         model.addAttribute("keyword", keyword);
