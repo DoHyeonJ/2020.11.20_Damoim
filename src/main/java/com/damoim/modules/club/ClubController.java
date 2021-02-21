@@ -29,12 +29,14 @@ public class ClubController {
     private final ClubFormValidator clubFormValidator;
     private final ClubRepository clubRepository;
 
+    // data 바인딩 처리 ( 기준은 : clubFormValidator )
     @InitBinder("clubForm")
     public void clubFormInitBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(clubFormValidator);
     }
 
-    @GetMapping("/new-club")
+    // 새로운 동호회 생성
+    @GetMapping("/new-club") //form.html에서 post 방식으로 받아온 값을 넣어준다.
     public String newClubSubmit(@CurrentAccount Account account, Model model) {
         model.addAttribute(account);
         model.addAttribute(new ClubForm());
