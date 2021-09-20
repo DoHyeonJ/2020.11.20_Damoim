@@ -17,6 +17,7 @@
 # 2. 사용 기술 및 기능
 - Java 11 
 - Spring Boot 2.3.4 
+- JPA
 - postgresql
 - Jqyery, Ajax
 - HTML, CSS, JS
