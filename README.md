@@ -25,7 +25,3 @@
 
 <br>
 
-
-
-# 3. DB 구성 및 관계도
-<img width="718" alt="스크린샷 2021-09-05 오후 2 42 11" src="https://user-images.githubusercontent.com/59347101/132116730-ba62652c-0d6d-4adb-87db-b44f013183ff.png">
